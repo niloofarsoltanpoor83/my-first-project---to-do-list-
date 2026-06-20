@@ -41,10 +41,7 @@ li {
     border-radius: 8px;
 }
 </style>   
- .completed {
-    text-decoration: line-through;
-    color: gray;
-}   
+
     </style>
     <title>My To-Do List</title>
 </head>
@@ -54,7 +51,10 @@ li {
 
 <input id="taskInput" placeholder="Write a task...">
 <button onclick="addTask()">Add</button>
-
+.completed {
+    text-decoration: line-through;
+    color: gray;
+}
 <ul id="taskList"></ul>
 
 <script>
