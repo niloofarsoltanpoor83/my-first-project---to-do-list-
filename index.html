@@ -1,86 +1,102 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>To-Do List</title>
+<meta charset="UTF-8">
+<title>To-Do List</title>
 
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f6f9;
-            text-align: center;
-            margin-top: 50px;
-        }
+<style>
+    body {
+        font-family: Arial;
+        background: #f4f6f9;
+        text-align: center;
+        margin-top: 50px;
+    }
 
-        h1 {
-            color: #333;
-        }
+    input {
+        padding: 10px;
+        width: 250px;
+    }
 
-        input {
-            padding: 10px;
-            width: 250px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-        }
+    button {
+        padding: 10px;
+        margin-left: 5px;
+        cursor: pointer;
+    }
 
-        button {
-            padding: 10px 15px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            margin-left: 5px;
-        }
+    ul {
+        padding: 0;
+        list-style: none;
+    }
 
-        ul {
-            list-style: none;
-            padding: 0;
-            margin-top: 20px;
-        }
+    li {
+        background: white;
+        margin: 10px auto;
+        width: 320px;
+        padding: 10px;
+        display: flex;
+        justify-content: space-between;
+        border-radius: 8px;
+        cursor: pointer;
+    }
 
-        li {
-            background: white;
-            margin: 10px auto;
-            width: 300px;
-            padding: 10px;
-            border-radius: 8px;
-            cursor: pointer;
-        }
+    .completed {
+        text-decoration: line-through;
+        color: gray;
+    }
 
-        .completed {
-            text-decoration: line-through;
-            color: gray;
-        }
-    </style>
+    .delete {
+        background: red;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        padding: 5px 8px;
+        cursor: pointer;
+    }
+</style>
 </head>
 
 <body>
 
-    <h1>My To-Do List</h1>
+<h1>My To-Do List</h1>
 
-    <input id="taskInput" placeholder="Write a task...">
-    <button onclick="addTask()">Add</button>
+<input id="taskInput" placeholder="Write task...">
+<button onclick="addTask()">Add</button>
 
-    <ul id="taskList"></ul>
+<ul id="taskList"></ul>
 
-    <script>
-        function addTask() {
-            let input = document.getElementById("taskInput");
-            let task = input.value.trim();
+<script>
+function addTask() {
+    let input = document.getElementById("taskInput");
+    let task = input.value.trim();
 
-            if (task === "") return;
+    if (!task) return;
 
-            let li = document.createElement("li");
-            li.textContent = task;
+    let li = document.createElement("li");
 
-            li.addEventListener("click", function () {
-                this.classList.toggle("completed");
-            });
+    let span = document.createElement("span");
+    span.textContent = task;
 
-            document.getElementById("taskList").appendChild(li);
+    span.addEventListener("click", function () {
+        span.classList.toggle("completed");
+    });
 
-            input.value = "";
-        }
-    </script>
+    let btn = document.createElement("button");
+    btn.textContent = "X";
+    btn.className = "delete";
+
+    btn.addEventListener("click", function (e) {
+        e.stopPropagation();
+        li.remove();
+    });
+
+    li.appendChild(span);
+    li.appendChild(btn);
+
+    document.getElementById("taskList").appendChild(li);
+
+    input.value = "";
+}
+</script>
 
 </body>
 </html>
