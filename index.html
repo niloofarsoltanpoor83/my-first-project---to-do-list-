@@ -65,10 +65,13 @@
 <ul id="taskList"></ul>
 
 <script>
-function addTask() {
+function saveTasks() {
+    localStorage.setItem("tasks", document.getElementById("taskList").innerHTML);
+}
+    addTask() {
     let input = document.getElementById("taskInput");
     let task = input.value.trim();
-
+saveTask();
     if (!task) return;
 
     let li = document.createElement("li");
@@ -78,6 +81,7 @@ function addTask() {
 
     span.addEventListener("click", function () {
         span.classList.toggle("completed");
+        saveTasks();
     });
 
     let btn = document.createElement("button");
@@ -87,6 +91,7 @@ function addTask() {
     btn.addEventListener("click", function (e) {
         e.stopPropagation();
         li.remove();
+        saveTask();
     });
 
     li.appendChild(span);
@@ -97,6 +102,10 @@ function addTask() {
     input.value = "";
 }
 </script>
+  window.onload = function () {
+    document.getElementById("taskList").innerHTML =
+        localStorage.getItem("tasks") || "";
+};  
 
 </body>
 </html>
