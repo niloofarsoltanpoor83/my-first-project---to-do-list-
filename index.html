@@ -68,11 +68,11 @@
 function saveTasks() {
     localStorage.setItem("tasks", document.getElementById("taskList").innerHTML);
 }
-    addTask() {
+   function addTask() {
     let input = document.getElementById("taskInput");
-    let task = input.value.trim();
-saveTask();
-    if (!task) return;
+    
+saveTasks();
+   
 
     let li = document.createElement("li");
 
@@ -91,7 +91,7 @@ saveTask();
     btn.addEventListener("click", function (e) {
         e.stopPropagation();
         li.remove();
-        saveTask();
+        saveTasks();
     });
 
     li.appendChild(span);
@@ -100,12 +100,15 @@ saveTask();
     document.getElementById("taskList").appendChild(li);
 
     input.value = "";
+       saveTasks();
 }
-</script>
+    
   window.onload = function () {
     document.getElementById("taskList").innerHTML =
-        localStorage.getItem("tasks") || "";
+        localStorage.getItem("tasks") ||
+    "";
 };  
-
+</script>
+    
 </body>
 </html>
