@@ -44,7 +44,9 @@
         color: gray;
     }
 
-    .delete {
+    .delete
+   
+    {
         background: red;
         color: white;
         border: none;
@@ -52,6 +54,15 @@
         padding: 5px 8px;
         cursor: pointer;
     }
+    .edit {
+    background: orange;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 8px;
+    cursor: pointer;
+    margin-left: 5px;
+}
 </style>
 </head>
 
@@ -87,8 +98,7 @@ function saveTasks() {
     btn.className = "delete";
 let editBtn = document.createElement("button");
 editBtn.textContent = "Edit";
-editBtn.style.background = "orange";
-editBtn.style.color = "white";
+editBtn.className="edit";
        editBtn.addEventListener("click", function (e) {
     e.stopPropagation();
 
