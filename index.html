@@ -85,7 +85,20 @@ function saveTasks() {
     let btn = document.createElement("button");
     btn.textContent = "X";
     btn.className = "delete";
+let editBtn = document.createElement("button");
+editBtn.textContent = "Edit";
+editBtn.style.background = "orange";
+editBtn.style.color = "white";
+       editBtn.addEventListener("click", function (e) {
+    e.stopPropagation();
 
+    let newTask = prompt("Edit your task:", span.textContent);
+
+    if (newTask && newTask.trim() !== "") {
+        span.textContent = newTask.trim();
+        saveTasks();
+    }
+});
     btn.addEventListener("click", function (e) {
         e.stopPropagation();
         li.remove();
@@ -93,6 +106,7 @@ function saveTasks() {
     });
 
     li.appendChild(span);
+       li.appendChild(editBtn);
     li.appendChild(btn);
 
     document.getElementById("taskList").appendChild(li);
