@@ -98,7 +98,7 @@ body.dark li{
 <button class="add" onclick="addTask()">Add</button>
 
 <button class="darkBtn" onclick="toggleDarkMode()">🌙 Dark Mode</button>
-
+<p id="taskCount">Tasks: 0</p>
 <ul id="taskList"></ul>
 
 <script>
@@ -106,7 +106,10 @@ body.dark li{
 function saveTasks(){
     localStorage.setItem("tasks",document.getElementById("taskList").innerHTML);
 }
-
+function updateTaskCount() {
+    let count = document.querySelectorAll("#taskList li").length;
+    document.getElementById("taskCount").textContent = "Tasks: " + count;
+}
 function addTask(){
 
     let input=document.getElementById("taskInput");
