@@ -118,7 +118,10 @@ function addTask(){
 
     let span=document.createElement("span");
     span.textContent=task;
-
+let date = document.createElement("small");
+date.textContent = new Date().toLocaleDateString();
+date.style.color = "gray";
+date.style.marginLeft = "10px";
     span.onclick=function(){
         span.classList.toggle("completed");
         saveTasks();
@@ -155,7 +158,13 @@ function addTask(){
 
     };
 
-    li.appendChild(span);
+    let textBox = document.createElement("div");
+
+textBox.appendChild(span);
+textBox.appendChild(document.createElement("br"));
+textBox.appendChild(date);
+
+li.appendChild(textBox);
     li.appendChild(editBtn);
     li.appendChild(deleteBtn);
 
