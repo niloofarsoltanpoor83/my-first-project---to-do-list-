@@ -98,11 +98,22 @@ body.dark li{
 <button class="add" onclick="addTask()">Add</button>
 
 <button class="darkBtn" onclick="toggleDarkMode()">🌙 Dark Mode</button>
+    
 <p id="taskCount">Tasks: 0</p>
 <ul id="taskList"></ul>
 
 <script>
+function toggleDarkMode(){
 
+    document.body.classList.toggle("dark");
+
+    if(document.body.classList.contains("dark")){
+        localStorage.setItem("darkMode","on");
+    }else{
+        localStorage.setItem("darkMode","off");
+    }
+
+}
 function saveTasks(){
     localStorage.setItem("tasks",document.getElementById("taskList").innerHTML);
 }
@@ -191,6 +202,10 @@ window.onload=function(){
 
     document.getElementById("taskList").innerHTML=
     localStorage.getItem("tasks") || "";
+if(localStorage.getItem("darkMode") === "on"){
+    document.body.classList.add("dark");
+}
+    
 updateTaskCount();
 };
 
