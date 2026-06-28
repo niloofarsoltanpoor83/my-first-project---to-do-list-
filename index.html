@@ -5,132 +5,75 @@
 <title>To-Do List</title>
 
 <style>
-    body {
-        font-family: Arial;
-        background:mediumpurple;
-        text-align: center;
-        margin-top: 50px;
-    }
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f6f9;
+    text-align: center;
+    margin-top: 50px;
+    transition: 0.3s;
+}
 
-    input {
-        padding: 10px;
-        width: 250px;
-    }
-
-    button {
-        padding: 10px;
-        margin-left: 5px;
-        cursor: pointer;
-    }
-
-    ul {
-        padding: 0;
-        list-style: none;
-    }
-
-    li {
-        background: white;
-        margin: 10px auto;
-        width: 320px;
-        padding: 10px;
-        display: flex;
-        justify-content: space-between;
-        border-radius: 8px;
-        cursor: pointer;
-    }
-
-    .completed {
-        text-decoration: line-through;
-        color: gray;
-    }
-
-    .delete
-   
-    {
-        background: red;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        padding: 5px 8px;
-        cursor: pointer;
-    }
-    .edit {
-    background: mediumpurple;
+body.dark {
+    background: #222;
     color: white;
-    border: none;
-    border-radius: 5px;
-    padding: 7px 15px;
-    cursor: pointer;
-    margin-left: 5px;
 }
-</style>
-</head>
 
-<body>
-
-<h1>My To-Do List</h1>
-
-<input id="taskInput" placeholder="Write task...">
-<button onclick="addTask()">Add</button>
-<button onclick="toggleDarkMode()">
-Dark Mode </button>
-    
-<ul id="taskList"></ul>
-
-<script>
-function saveTasks() {
-    localStorage.setItem("tasks", document.getElementById("taskList").innerHTML);
+h1{
+    color: inherit;
 }
-   function addTask() {
-    let input = document.getElementById("taskInput");
-    let task=input.value.trim();
-       if(!task)return;
-    let li = document.createElement("li");
 
-    let span = document.createElement("span");
-    span.textContent = task;
+input{
+    padding:10px;
+    width:250px;
+    border-radius:8px;
+    border:1px solid #ccc;
+}
 
-    span.addEventListener("click", function () {
-        span.classList.toggle("completed");
-        saveTasks();
-    });
+button{
+    padding:10px;
+    margin-left:5px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+}
 
-    let btn = document.createElement("button");
-    btn.textContent = "X";
-    btn.className = "delete";
-let editBtn = document.createElement("button");
-editBtn.textContent = "Edit";
-editBtn.className="edit";
-       editBtn.addEventListener("click", function (e) {
-    e.stopPropagation();
+.add{
+    background:mediumseagreen;
+    color:white;
+}
 
-    let newTask = prompt("Edit your task:", span.textContent);
+.darkBtn{
+    background:#444;
+    color:white;
+}
 
-    if (newTask && newTask.trim() !== "") {
-        span.textContent = newTask.trim();
-        saveTasks();
-    }
-});
-    btn.addEventListener("click", function (e) {
-        e.stopPropagation();
-        li.remove();
-        saveTasks();
-    });
+ul{
+    list-style:none;
+    padding:0;
+}
 
-    li.appendChild(span);
-       li.appendChild(editBtn);
-   li.appendChild(btn);
-       document.getElementById("taskInput").addEventListener("keypress", function (e) {
-    if (e.key === "Enter") {
-        addTask();
-    }
-});
-  window.onload = function () {
-    document.getElementById("taskList").innerHTML =
-        localStorage.getItem("tasks") ||
-    "";
-};  
-</script>
-    
-</body>
-</html>
+li{
+    background:white;
+    width:340px;
+    margin:10px auto;
+    padding:10px;
+    border-radius:10px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+body.dark li{
+    background:#333;
+}
+
+.completed{
+    text-decoration:line-through;
+    color:gray;
+}
+
+.edit{
+    background:mediumpurple;
+    color:white;
+    padding:7px 15px;
+    border-radius
