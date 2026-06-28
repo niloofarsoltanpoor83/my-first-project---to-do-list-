@@ -117,14 +117,8 @@ editBtn.className="edit";
 
     li.appendChild(span);
        li.appendChild(editBtn);
-    li.appendChild(btn);
-
-    document.getElementById("taskList").appendChild(li);
-
-    input.value = "";
-       saveTasks();
-}
-    document.getElementById("taskInput").addEventListener("keypress", function (e) {
+   li.appendChild(btn);
+       document.getElementById("taskInput").addEventListener("keypress", function (e) {
     if (e.key === "Enter") {
         addTask();
     }
