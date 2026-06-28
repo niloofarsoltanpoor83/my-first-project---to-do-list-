@@ -158,7 +158,7 @@ date.style.marginLeft = "10px";
         li.remove();
 
         saveTasks();
-
+updateTaskCount();
     };
 
     let textBox = document.createElement("div");
@@ -176,7 +176,7 @@ li.appendChild(textBox);
     input.value="";
 
     saveTasks();
-
+updateTaskCount();
 }
 
 document.getElementById("taskInput").addEventListener("keypress",function(e){
@@ -191,7 +191,7 @@ window.onload=function(){
 
     document.getElementById("taskList").innerHTML=
     localStorage.getItem("tasks") || "";
-
+updateTaskCount();
 };
 
 function toggleDarkMode(){
