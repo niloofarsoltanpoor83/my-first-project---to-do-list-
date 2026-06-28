@@ -109,8 +109,10 @@ function toggleDarkMode(){
 
     if(document.body.classList.contains("dark")){
         localStorage.setItem("darkMode","on");
+       alert(localStorage.getItem("darkMode")); 
     }else{
         localStorage.setItem("darkMode","off");
+        alert(localStorage.getItem("darkMode"));
     }
 
 }
