@@ -124,7 +124,11 @@ editBtn.className="edit";
     input.value = "";
        saveTasks();
 }
-    
+    document.getElementById("taskInput").addEventListener("keypress", function (e) {
+    if (e.key === "Enter") {
+        addTask();
+    }
+});
   window.onload = function () {
     document.getElementById("taskList").innerHTML =
         localStorage.getItem("tasks") ||
