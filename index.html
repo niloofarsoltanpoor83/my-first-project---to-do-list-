@@ -211,15 +211,57 @@ if(localStorage.getItem("darkMode") === "on"){
     
 updateTaskCount();
 };
-function showAll() {
+ function showAll(){
+
+    let tasks = document.querySelectorAll("#taskList li");
+
+    tasks.forEach(function(task){
+
+        task.style.display = "flex";
+
+    });
 
 }
 
-function showActive() {
+}
+
+function showActive(){
+
+    let tasks = document.querySelectorAll("#taskList li");
+
+    tasks.forEach(function(task){
+
+        let span = task.querySelector("span");
+
+        if(!span.classList.contains("completed")){
+            task.style.display = "flex";
+        }else{
+            task.style.display = "none";
+        }
+
+    });
 
 }
 
-function showCompleted() {
+}
+
+function showCompleted(){
+
+    let tasks = document.querySelectorAll("#taskList li");
+
+    tasks.forEach(function(task){
+
+        let span = task.querySelector("span");
+
+        if(span.classList.contains("completed")){
+            task.style.display = "flex";
+        }else{
+            task.style.display = "none";
+        }
+
+    });
+
+}
 
 }
 </script>
