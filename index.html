@@ -98,6 +98,11 @@ body.dark li{
 <button class="add" onclick="addTask()">Add</button>
 
 <button class="darkBtn" onclick="toggleDarkMode()">🌙 Dark Mode</button>
+    <input
+        type="text"
+        id="searchInput"
+        placeholder="Search task..."
+        onkeyup="searchTask()">
   <button onclick="showAll()">All</button>
     <button onclick="showActive()">Active</button>
       <button onclick="showCompleted()">Completed</button>
@@ -262,7 +267,23 @@ function showCompleted(){
     });
 
 }
+function searchTask(){
+    let search = document.getElementById("searchInput").value.toLowerCase();
 
+let tasks = document.querySelectorAll("#taskList li");
+
+tasks.forEach(function(task){
+
+    let text = task.querySelector("span").textContent.toLowerCase();
+
+    if(text.includes(search)){
+        task.style.display = "flex";
+    }else{
+        task.style.display = "none";
+    }
+
+});
+    }
 </script>
 
 </body>
