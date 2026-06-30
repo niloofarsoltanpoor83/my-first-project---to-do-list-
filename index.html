@@ -93,6 +93,13 @@ body.dark li{
 <h1>My To-Do List</h1>
 
 <input id="taskInput" placeholder="Write task...">
+    <select id="priority">
+    <option value="High">🔴 High</option>
+    <option value="Medium">🟡 Medium</option>
+    <option value="Low">🟢 Low</option>
+</select>
+
+<input type="date" id="dueDate">
 
 <button class="add" onclick="addTask()">Add</button>
 
@@ -133,7 +140,8 @@ function addTask(){
 
     let input=document.getElementById("taskInput");
     let task=input.value.trim();
-
+let priority = document.getElementById("priority").value;
+let dueDate = document.getElementById("dueDate").value;
     if(task==="") return;
 
     let li=document.createElement("li");
@@ -144,6 +152,19 @@ let date = document.createElement("small");
 date.textContent = new Date().toLocaleDateString();
 date.style.color = "gray";
 date.style.marginLeft = "10px";
+    let priorityText = document.createElement("small");
+priorityText.textContent = priority;
+priorityText.style.fontWeight = "bold";
+
+if(priority === "High"){
+    priorityText.style.color = "red";
+}
+else if(priority === "Medium"){
+    priorityText.style.color = "orange";
+}
+else{
+    priorityText.style.color = "green";
+}
     span.onclick=function(){
         span.classList.toggle("completed");
         saveTasks();
@@ -184,8 +205,9 @@ updateTaskCount();
 
 textBox.appendChild(span);
 textBox.appendChild(document.createElement("br"));
+textBox.appendChild(priorityText);
+textBox.appendChild(document.createElement("br"));
 textBox.appendChild(date);
-
 li.appendChild(textBox);
     li.appendChild(editBtn);
     li.appendChild(deleteBtn);
