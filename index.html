@@ -92,8 +92,9 @@ body.dark li{
     padding:7px 12px;
     border-radius:8px;
 }
-    buttonBox{display:flex;
+    .buttonBox{display:flex;
               gap:8px;
+              }
     @media (max-width: 768px){
     .toolbar{
         flex-direction: column;
@@ -193,6 +194,15 @@ else if(priority === "Medium"){
 else{
     priorityText.style.color = "green";
 }
+    let dueDateText = document.createElement("small");
+
+if(dueDate !== ""){
+    dueDateText.textContent = "📅 Due: " + dueDate;
+}else{
+    dueDateText.textContent = "📅 No due date";
+}
+
+dueDateText.style.color = "gray";
     span.onclick=function(){
         span.classList.toggle("completed");
         saveTasks();
@@ -227,13 +237,18 @@ else{
     li.remove();
     saveTasks();
     updateTaskCount();
-}
+};
     let textBox = document.createElement("div");
 
 textBox.appendChild(span);
 textBox.appendChild(document.createElement("br"));
+
 textBox.appendChild(priorityText);
 textBox.appendChild(document.createElement("br"));
+
+textBox.appendChild(dueDateText);
+textBox.appendChild(document.createElement("br"));
+
 textBox.appendChild(date);
 li.appendChild(textBox);
     let buttonBox = document.createElement("div");
@@ -255,7 +270,7 @@ document.getElementById("taskInput").addEventListener("keypress",function(e){
         addTask();
     }
 
-});
+});//
 window.onload=function(){
 
     document.getElementById("taskList").innerHTML=
