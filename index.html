@@ -46,7 +46,14 @@ button{
     background:#444;
     color:white;
 }
-
+.toolbar{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-bottom:20px;
+}
 ul{
     list-style:none;
     padding:0;
@@ -85,13 +92,33 @@ body.dark li{
     padding:7px 12px;
     border-radius:8px;
 }
+    buttonBox{display:flex;
+              gap:8px;
+    @media (max-width: 768px){
+    .toolbar{
+        flex-direction: column;
+    }
+    input,
+    select,
+    button{
+        width:90%;
+        margin:5px 0;
+    }
+    li{
+        width:90%;
+        display:flex;
+        flex-direction:column;
+        gap:10px;
+    }
+}
 </style>
 </head>
 
 <body>
 
 <h1>My To-Do List</h1>
-
+<div class="toolbar">
+    
 <input id="taskInput" placeholder="Write task...">
     <select id="priority">
     <option value="High">🔴 High</option>
@@ -112,6 +139,7 @@ body.dark li{
   <button onclick="showAll()">All</button>
     <button onclick="showActive()">Active</button>
       <button onclick="showCompleted()">Completed</button>
+</div>
 <p id="taskCount">Tasks: 0</p>
 <ul id="taskList"></ul>
 
@@ -195,12 +223,11 @@ else{
 
         e.stopPropagation();
 
-        li.remove();
-
-        saveTasks();
-updateTaskCount();
-    };
-
+     if(confirm("Are you sure you want to delete this task?")){
+    li.remove();
+    saveTasks();
+    updateTaskCount();
+}
     let textBox = document.createElement("div");
 
 textBox.appendChild(span);
@@ -209,9 +236,11 @@ textBox.appendChild(priorityText);
 textBox.appendChild(document.createElement("br"));
 textBox.appendChild(date);
 li.appendChild(textBox);
-    li.appendChild(editBtn);
-    li.appendChild(deleteBtn);
-
+    let buttonBox = document.createElement("div");
+        buttonBox.className="buttonBox";
+buttonBox.appendChild(editBtn);
+buttonBox.appendChild(deleteBtn);
+li.appendChild(buttonBox);
     document.getElementById("taskList").appendChild(li);
 
     input.value="";
