@@ -140,6 +140,7 @@ body.dark li{
   <button onclick="showAll()">All</button>
     <button onclick="showActive()">Active</button>
       <button onclick="showCompleted()">Completed</button>
+   <button onclick="clearCompleted()">ClearCompleted</button>
 </div>
 <p id="taskCount">Tasks: 0</p>
 <ul id="taskList"></ul>
@@ -349,7 +350,22 @@ tasks.forEach(function(task){
     }
 
 });
-    }
+    function clearCompleted(){
+
+    let tasks = document.querySelectorAll("#taskList li");
+
+    tasks.forEach(function(task){
+
+        let span = task.querySelector("span");
+
+        if(span.classList.contains("completed")){
+            task.remove();
+        }
+    });
+    saveTasks();
+    updateTaskCount();
+}
+   
 </script>
 
 </body>
