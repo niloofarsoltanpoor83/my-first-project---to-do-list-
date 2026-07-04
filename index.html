@@ -140,6 +140,7 @@ body.dark li{
     <button onclick="showActive()">Active</button>
       <button onclick="showCompleted()">Completed</button>
    <button onclick="clearCompleted()">ClearCompleted</button>
+    <button onclick="deletedAllTasks()">Deleted All</button>
 </div>
 <p id="taskCount">Tasks: 0</p>
 <ul id="taskList"></ul>
@@ -365,7 +366,18 @@ tasks.forEach(function(task){
     saveTasks();
     updateTaskCount();
 }
-   
+   function deleteAllTasks(){
+
+    if(confirm("Are you sure you want to delete all tasks?")){
+
+        document.getElementById("taskList").innerHTML = "";
+
+        saveTasks();
+        updateTaskCount();
+
+    }
+
+}
 </script>
 
 </body>
