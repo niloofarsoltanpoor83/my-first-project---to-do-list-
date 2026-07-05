@@ -171,6 +171,21 @@ function updateTaskCount() {
     let count = document.querySelectorAll("#taskList li").length;
     document.getElementById("taskCount").textContent = "Tasks: " + count;
 }
+function updateProgress(){
+
+    let tasks = document.querySelectorAll("#taskList li");
+    let completed = document.querySelectorAll("#taskList .completed");
+
+    let percent = 0;
+
+    if(tasks.length > 0){
+        percent = Math.round((completed.length / tasks.length) * 100);
+    }
+
+    document.getElementById("progressBar").value = percent;
+    document.getElementById("progressText").textContent = percent + "%";
+
+}    
 function addTask(){
 
     let input=document.getElementById("taskInput");
@@ -228,6 +243,7 @@ dueDateText.style.color = "gray";
         if(newTask && newTask.trim()!==""){
             span.textContent=newTask.trim();
             saveTasks();
+            updateProgress();
         }
 
     };
@@ -271,6 +287,7 @@ li.appendChild(buttonBox);
 
     saveTasks();
 updateTaskCount();
+    updateProgress();
 }
 
 document.getElementById("taskInput").addEventListener("keypress",function(e){
@@ -373,12 +390,11 @@ tasks.forEach(function(task){
     });
     saveTasks();
     updateTaskCount();
-        updatrProgress();
+        updateProgress();
 }
    
 function deleteAllTasks(){
 
-    alert("Function is working!");
 
     if(confirm("Are you sure you want to delete all tasks?")){
         document.getElementById("taskList").innerHTML = "";
@@ -387,21 +403,7 @@ function deleteAllTasks(){
         updateProgress();
     }
 }
-    function updateProgress(){
-
-    let tasks = document.querySelectorAll("#taskList li");
-    let completed = document.querySelectorAll("#taskList .completed");
-
-    let percent = 0;
-
-    if(tasks.length > 0){
-        percent = Math.round((completed.length / tasks.length) * 100);
-    }
-
-    document.getElementById("progressBar").value = percent;
-    document.getElementById("progressText").textContent = percent + "%";
-
-} 
+      
 </script>
 
 </body>
