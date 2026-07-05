@@ -142,6 +142,11 @@ body.dark li{
    <button onclick="clearCompleted()">ClearCompleted</button>
     <button onclick="deleteAllTasks()">Deleted All</button>
 </div>
+    <h3>Progress</h3>
+
+<progress id="progressBar" value="0" max="100"></progress>
+
+<p id="progressText">0%</p>
 <p id="taskCount">Tasks: 0</p>
 <ul id="taskList"></ul>
 
@@ -207,6 +212,7 @@ dueDateText.style.color = "gray";
     span.onclick=function(){
         span.classList.toggle("completed");
         saveTasks();
+        updateProgress();
     };
 
     let editBtn=document.createElement("button");
@@ -282,6 +288,7 @@ if(localStorage.getItem("darkMode") === "on"){
 }
     
 updateTaskCount();
+    updateProgress();
 };
  function showAll(){
 
@@ -365,6 +372,7 @@ tasks.forEach(function(task){
     });
     saveTasks();
     updateTaskCount();
+        updatrProgress();
 }
    
 function deleteAllTasks(){
@@ -375,9 +383,24 @@ function deleteAllTasks(){
         document.getElementById("taskList").innerHTML = "";
         saveTasks();
         updateTaskCount();
+        updateProgress();
     }
 }
-    
+    function updateProgress(){
+
+    let tasks = document.querySelectorAll("#taskList li");
+    let completed = document.querySelectorAll("#taskList .completed");
+
+    let percent = 0;
+
+    if(tasks.length > 0){
+        percent = Math.round((completed.length / tasks.length) * 100);
+    }
+
+    document.getElementById("progressBar").value = percent;
+    document.getElementById("progressText").textContent = percent + "%";
+
+} 
 </script>
 
 </body>
