@@ -137,7 +137,8 @@ body.dark li{
     }
 }
 </style>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"> 
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
 </head>
 
 <body>
@@ -224,7 +225,15 @@ function updateProgress(){
 
     document.getElementById("progressBar").value = percent;
     document.getElementById("progressText").textContent = percent + "%";
+if(percent === 100 && tasks.length > 0){
 
+    confetti({
+        particleCount: 150,
+        spread: 90,
+        origin: { y: 0.6 }
+    });
+
+}
 }    
 function addTask(){
 
