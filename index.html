@@ -129,21 +129,33 @@ body.dark li{
 </select>
 
 <input type="date" id="dueDate">
-
-<button class="add" onclick="addTask()"><i class="fa-solid fa-plus"></i>Add</button>
-
+<button class="add" onclick="addTask()">
+    <i class="fa-solid fa-plus"></i> Add
+</button>
 <button class="darkBtn" onclick="toggleDarkMode()">
-    <i class="fa-solid fa-moon"></i>🌙 Dark Mode</button>
+    <i class="fa-solid fa-moon"></i> Dark Mode
+</button>
+
     <input
         type="text"
         id="searchInput"
         placeholder="Search task..."
         onkeyup="searchTask()">
-  <button onclick="showAll()">All</button>
-    <button onclick="showActive()">Active</button>
-      <button onclick="showCompleted()">Completed</button>
-   <button onclick="clearCompleted()">ClearCompleted</button>
-    <button onclick="deleteAllTasks()">Deleted All</button>
+ <button onclick="showAll()">
+    <i class="fa-solid fa-list"></i> All
+</button>
+    <button onclick="showActive()">
+    <i class="fa-solid fa-hourglass-half"></i> Active
+</button>
+     <button onclick="showCompleted()">
+    <i class="fa-solid fa-check"></i> Completed
+</button>
+   <button onclick="clearCompleted()">
+    <i class="fa-solid fa-broom"></i> Clear Completed
+</button>
+    <button onclick="deleteAllTasks()">
+    <i class="fa-solid fa-trash"></i> Delete All
+</button>
 </div>
     <h3>Progress</h3>
 
