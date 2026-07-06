@@ -190,8 +190,8 @@ body.dark li{
 <p id="progressText">0%</p>
 <p id="taskCount">Tasks: 0</p>
 <ul id="taskList"></ul>
-
 <script>
+    let celebrated = false;
 function toggleDarkMode(){
 
     document.body.classList.toggle("dark");
@@ -225,16 +225,16 @@ function updateProgress(){
 
     document.getElementById("progressBar").value = percent;
     document.getElementById("progressText").textContent = percent + "%";
-if(percent === 100 && tasks.length > 0){
-
+if (percent === 100 && tasks.length > 0 &&! celebrated){celebrated= true;
     confetti({
         particleCount: 150,
         spread: 90,
         origin: { y: 0.6 }
     });
-
+if(percent<100){celebrated = false;}
 }
 }    
+    
 function addTask(){
 
     let input=document.getElementById("taskInput");
