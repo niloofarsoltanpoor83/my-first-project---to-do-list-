@@ -112,6 +112,7 @@ body.dark li{
     }
 }
 </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">  
 </head>
 
 <body>
@@ -128,9 +129,10 @@ body.dark li{
 
 <input type="date" id="dueDate">
 
-<button class="add" onclick="addTask()">Add</button>
+<button class="add" onclick="addTask()"><i class="fa-solid fa-plus"></i>Add</button>
 
-<button class="darkBtn" onclick="toggleDarkMode()">🌙 Dark Mode</button>
+<button class="darkBtn" onclick="toggleDarkMode()">
+    <i class="fa-solid fa-moon"></i>🌙 Dark Mode</button>
     <input
         type="text"
         id="searchInput"
@@ -231,7 +233,7 @@ dueDateText.style.color = "gray";
     };
 
     let editBtn=document.createElement("button");
-    editBtn.textContent="Edit";
+    editBtn.innerHTML= '<iclass="fa-solid fa-pen"></i>Edit';
     editBtn.className="edit";
 
     editBtn.onclick=function(e){
@@ -249,7 +251,7 @@ dueDateText.style.color = "gray";
     };
 
     let deleteBtn=document.createElement("button");
-    deleteBtn.textContent="X";
+    deleteBtn.innerHTML= '<i class="fa-solid fa-trash"></i>';
     deleteBtn.className="delete";
 
     deleteBtn.onclick=function(e){
