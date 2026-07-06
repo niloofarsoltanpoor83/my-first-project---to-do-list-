@@ -225,13 +225,19 @@ function updateProgress(){
 
     document.getElementById("progressBar").value = percent;
     document.getElementById("progressText").textContent = percent + "%";
-if (percent === 100 && tasks.length > 0 &&! celebrated){celebrated= true;
-    confetti({
-        particleCount: 150,
-        spread: 90,
-        origin: { y: 0.6 }
-    });
-if(percent<100){celebrated = false;}
+if (percent === 100 && tasks.length > 0 && !celebrated) {
+    celebrated = true;
+
+    setTimeout(() => {
+        confetti({
+            particleCount: 150,
+            spread: 90,
+            origin: { y: 0.6 }
+        });
+    }, 100);
+}
+                                                        
+    if(percent<100){celebrated = false;}
 }
 }    
     
