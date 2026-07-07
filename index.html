@@ -238,7 +238,6 @@ if (percent === 100 && tasks.length > 0 && !celebrated) {
 }
                                                         
     if(percent<100){celebrated = false;}
-}
 }    
     
 function addTask(){
@@ -287,7 +286,7 @@ dueDateText.style.color = "gray";
     };
 
     let editBtn=document.createElement("button");
-    editBtn.innerHTML= '<i class="fa-solid fa-pen"></i>Edit';
+    
     editBtn.className="edit";
 
     editBtn.onclick=function(e){
