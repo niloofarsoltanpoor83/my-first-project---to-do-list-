@@ -206,7 +206,28 @@ function toggleDarkMode(){
 
 }
 function saveTasks(){
-    localStorage.setItem("tasks",document.getElementById("taskList").innerHTML);
+
+    let tasks = [];
+
+    document.querySelectorAll("#taskList li").forEach(function(li){
+
+        let span = li.querySelector("span");
+        let priority = li.querySelectorAll("small")[0].textContent;
+        let dueDate = li.querySelectorAll("small")[1].textContent;
+
+        tasks.push({
+
+            text: span.textContent,
+            completed: span.classList.contains("completed"),
+            priority: priority,
+            dueDate: dueDate
+
+        });
+
+    });
+
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+
 }
 function updateTaskCount() {
     let count = document.querySelectorAll("#taskList li").length;
@@ -289,36 +310,7 @@ dueDateText.style.color = "gray";
     
     editBtn.className="edit";
 
-    editBtn.onclick=function(e){
-
-        e.stopPropagation();
-
-        let newTask=prompt("Edit task",span.textContent);
-
-        if(newTask && newTask.trim()!==""){
-            span.textContent=newTask.trim();
-            saveTasks();
-            updateProgress();
-        }
-
-    };
-
-    let deleteBtn=document.createElement("button");
-  editBtn.innerHTML = '<i class="fa-solid fa-pen"></i>';
-deleteBtn.innerHTML = '<i class="fa-solid fa-trash"></i>';
-    deleteBtn.className="delete";
-
-    deleteBtn.onclick=function(e){
-
-        e.stopPropagation();
-
-     if(confirm("Are you sure you want to delete this task?")){
-    li.remove();
-    saveTasks();
-    updateTaskCount();
-         updateProgress();
-     }
-};
+    
     let textBox = document.createElement("div");
 
 textBox.appendChild(span);
@@ -353,22 +345,29 @@ document.getElementById("taskInput").addEventListener("keypress",function(e){
     }
 
 });//
-window.onload=function(){
 
-    document.getElementById("taskList").innerHTML=
-    localStorage.getItem("tasks") || "";
-    document.querySelectorAll("#taskList li").forEach(function(li){
+window.onload = function(){
 
-    let span = li.querySelector("span");
-    let editBtn = li.querySelector(".edit");
-    let deleteBtn = li.querySelector(".delete");
+    let savedTasks = JSON.parse(localStorage.getItem("tasks")) || [];
 
-    span.onclick = function(){
-        span.classList.toggle("completed");
-        saveTasks();
-        updateProgress();
-    };
+    savedTasks.forEach(function(task){
 
+        createTask(
+            task.text,
+            task.priority,
+            task.dueDate,
+            task.completed
+        );
+
+    });
+
+    if(localStorage.getItem("darkMode") === "on"){
+        document.body.classList.add("dark");
+    }
+
+    updateTaskCount();
+    updateProgress();
+};
     editBtn.onclick = function(e){
         e.stopPropagation();
 
