@@ -378,6 +378,11 @@ function saveTasks(){
 
     localStorage.setItem("tasks", JSON.stringify(tasks));
 }
+   document.getElementById("taskInput").addEventListener("keydown", function(e){
+    if(e.key === "Enter"){
+        addTask();
+    }
+}); 
     window.onload = function () {
 
     let savedTasks = JSON.parse(localStorage.getItem("tasks")) || [];
