@@ -357,6 +357,41 @@ window.onload=function(){
 
     document.getElementById("taskList").innerHTML=
     localStorage.getItem("tasks") || "";
+    document.querySelectorAll("#taskList li").forEach(function(li){
+
+    let span = li.querySelector("span");
+    let editBtn = li.querySelector(".edit");
+    let deleteBtn = li.querySelector(".delete");
+
+    span.onclick = function(){
+        span.classList.toggle("completed");
+        saveTasks();
+        updateProgress();
+    };
+
+    editBtn.onclick = function(e){
+        e.stopPropagation();
+
+        let newTask = prompt("Edit task", span.textContent);
+
+        if(newTask && newTask.trim() !== ""){
+            span.textContent = newTask.trim();
+            saveTasks();
+        }
+    };
+
+    deleteBtn.onclick = function(e){
+        e.stopPropagation();
+
+        if(confirm("Delete this task?")){
+            li.remove();
+            saveTasks();
+            updateTaskCount();
+            updateProgress();
+        }
+    };
+
+});
 if(localStorage.getItem("darkMode") === "on"){
     document.body.classList.add("dark");
 }
