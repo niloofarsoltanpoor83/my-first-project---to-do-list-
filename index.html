@@ -192,47 +192,26 @@ body.dark li{
 <ul id="taskList"></ul>
 <script>
     let celebrated = false;
+
 function toggleDarkMode(){
 
     document.body.classList.toggle("dark");
 
     if(document.body.classList.contains("dark")){
         localStorage.setItem("darkMode","on");
-       alert(localStorage.getItem("darkMode")); 
     }else{
         localStorage.setItem("darkMode","off");
-        alert(localStorage.getItem("darkMode"));
     }
 
 }
-function saveTasks(){
 
-    let tasks = [];
+function updateTaskCount(){
 
-    document.querySelectorAll("#taskList li").forEach(function(li){
-
-        let span = li.querySelector("span");
-        let priority = li.querySelectorAll("small")[0].textContent;
-        let dueDate = li.querySelectorAll("small")[1].textContent;
-
-        tasks.push({
-
-            text: span.textContent,
-            completed: span.classList.contains("completed"),
-            priority: priority,
-            dueDate: dueDate
-
-        });
-
-    });
-
-    localStorage.setItem("tasks", JSON.stringify(tasks));
-
-}
-function updateTaskCount() {
     let count = document.querySelectorAll("#taskList li").length;
     document.getElementById("taskCount").textContent = "Tasks: " + count;
+
 }
+
 function updateProgress(){
 
     let tasks = document.querySelectorAll("#taskList li");
@@ -246,119 +225,170 @@ function updateProgress(){
 
     document.getElementById("progressBar").value = percent;
     document.getElementById("progressText").textContent = percent + "%";
-if (percent === 100 && tasks.length > 0 && !celebrated) {
-    celebrated = true;
 
-    setTimeout(() => {
+    if(percent === 100 && tasks.length > 0 && !celebrated){
+
+        celebrated = true;
+
         confetti({
-            particleCount: 150,
-            spread: 90,
-            origin: { y: 0.6 }
+            particleCount:150,
+            spread:90,
+            origin:{ y:0.6 }
         });
-    }, 100);
+
+    }
+
+    if(percent < 100){
+        celebrated = false;
+    }
+
 }
-                                                        
-    if(percent<100){celebrated = false;}
-}    
-    
-function addTask(){
+    function createTask(text, priority, dueDate, completed){
 
-    let input=document.getElementById("taskInput");
-    let task=input.value.trim();
-let priority = document.getElementById("priority").value;
-let dueDate = document.getElementById("dueDate").value;
-    if(task==="") return;
-
-    let li=document.createElement("li");
+    let li = document.createElement("li");
     li.classList.add("newTask");
 
-    let span=document.createElement("span");
-    span.textContent=task;
-let date = document.createElement("small");
-date.textContent = new Date().toLocaleDateString();
-date.style.color = "gray";
-date.style.marginLeft = "10px";
-    let priorityText = document.createElement("small");
-priorityText.textContent = priority;
-priorityText.style.fontWeight = "bold";
+    let span = document.createElement("span");
+    span.textContent = text;
 
-if(priority === "High"){
-    priorityText.style.color = "red";
-}
-else if(priority === "Medium"){
-    priorityText.style.color = "orange";
-}
-else{
-    priorityText.style.color = "green";
-}
-    let dueDateText = document.createElement("small");
+    if(completed){
+        span.classList.add("completed");
+    }
 
-if(dueDate !== ""){
-    dueDateText.textContent = "📅 Due: " + dueDate;
-}else{
-    dueDateText.textContent = "📅 No due date";
-}
-
-dueDateText.style.color = "gray";
-    span.onclick=function(){
+    span.onclick = function(){
         span.classList.toggle("completed");
         saveTasks();
         updateProgress();
     };
 
-    let editBtn=document.createElement("button");
-    
-    editBtn.className="edit";
+    let priorityText = document.createElement("small");
+    priorityText.textContent = priority;
+    priorityText.style.fontWeight = "bold";
 
-    
+    if(priority === "High"){
+        priorityText.style.color = "red";
+    }else if(priority === "Medium"){
+        priorityText.style.color = "orange";
+    }else{
+        priorityText.style.color = "green";
+    }
+
+    let dueDateText = document.createElement("small");
+
+    if(dueDate){
+        dueDateText.textContent = dueDate;
+    }else{
+        dueDateText.textContent = "📅 No due date";
+    }
+
+    dueDateText.style.color = "gray";
+
+    let date = document.createElement("small");
+    date.textContent = new Date().toLocaleDateString();
+    date.style.color = "gray";
+
     let textBox = document.createElement("div");
 
-textBox.appendChild(span);
-textBox.appendChild(document.createElement("br"));
+    textBox.appendChild(span);
+    textBox.appendChild(document.createElement("br"));
+    textBox.appendChild(priorityText);
+    textBox.appendChild(document.createElement("br"));
+    textBox.appendChild(dueDateText);
+    textBox.appendChild(document.createElement("br"));
+    textBox.appendChild(date);
 
-textBox.appendChild(priorityText);
-textBox.appendChild(document.createElement("br"));
+    let editBtn = document.createElement("button");
+    editBtn.className = "edit";
+    editBtn.innerHTML = '<i class="fa-solid fa-pen"></i>';
 
-textBox.appendChild(dueDateText);
-textBox.appendChild(document.createElement("br"));
+    editBtn.onclick = function(e){
 
-textBox.appendChild(date);
-li.appendChild(textBox);
+        e.stopPropagation();
+
+        let newTask = prompt("Edit task", span.textContent);
+
+        if(newTask && newTask.trim() !== ""){
+            span.textContent = newTask.trim();
+            saveTasks();
+        }
+
+    };
+
+    let deleteBtn = document.createElement("button");
+    deleteBtn.className = "delete";
+    deleteBtn.innerHTML = '<i class="fa-solid fa-trash"></i>';
+
+    deleteBtn.onclick = function(e){
+
+        e.stopPropagation();
+
+        if(confirm("Are you sure?")){
+            li.remove();
+            saveTasks();
+            updateTaskCount();
+            updateProgress();
+        }
+
+    };
+
     let buttonBox = document.createElement("div");
-        buttonBox.className="buttonBox";
-buttonBox.appendChild(editBtn);
-buttonBox.appendChild(deleteBtn);
-li.appendChild(buttonBox);
+    buttonBox.className = "buttonBox";
+
+    buttonBox.appendChild(editBtn);
+    buttonBox.appendChild(deleteBtn);
+
+    li.appendChild(textBox);
+    li.appendChild(buttonBox);
+
     document.getElementById("taskList").appendChild(li);
 
-    input.value="";
+}
+    function addTask(){
+
+    let input = document.getElementById("taskInput");
+    let task = input.value.trim();
+    let priority = document.getElementById("priority").value;
+    let dueDate = document.getElementById("dueDate").value;
+
+    if(task === "") return;
+
+    createTask(task, priority, dueDate, false);
+
+    input.value = "";
 
     saveTasks();
-updateTaskCount();
+    updateTaskCount();
     updateProgress();
 }
 
-document.getElementById("taskInput").addEventListener("keypress",function(e){
+function saveTasks(){
 
-    if(e.key==="Enter"){
-        addTask();
-    }
+    let tasks = [];
 
-});//
+    document.querySelectorAll("#taskList li").forEach(function(li){
 
-window.onload = function(){
+        tasks.push({
+            text: li.querySelector("span").textContent,
+            priority: li.querySelectorAll("small")[0].textContent,
+            dueDate: li.querySelectorAll("small")[1].textContent.replace("📅 Due: ",""),
+            completed: li.querySelector("span").classList.contains("completed")
+        });
+
+    });
+
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+}
+    window.onload = function () {
 
     let savedTasks = JSON.parse(localStorage.getItem("tasks")) || [];
 
     savedTasks.forEach(function(task){
-
         createTask(
             task.text,
             task.priority,
-            task.dueDate,
+            task.dueDate === "📅 No due date" ? "" : task.dueDate,
             task.completed
         );
-
     });
 
     if(localStorage.getItem("darkMode") === "on"){
@@ -368,133 +398,4 @@ window.onload = function(){
     updateTaskCount();
     updateProgress();
 };
-    editBtn.onclick = function(e){
-        e.stopPropagation();
-
-        let newTask = prompt("Edit task", span.textContent);
-
-        if(newTask && newTask.trim() !== ""){
-            span.textContent = newTask.trim();
-            saveTasks();
-        }
-    };
-
-    deleteBtn.onclick = function(e){
-        e.stopPropagation();
-
-        if(confirm("Delete this task?")){
-            li.remove();
-            saveTasks();
-            updateTaskCount();
-            updateProgress();
-        }
-    };
-
-});
-if(localStorage.getItem("darkMode") === "on"){
-    document.body.classList.add("dark");
-}
-    
-updateTaskCount();
-    updateProgress();
-};
- function showAll(){
-
-    let tasks = document.querySelectorAll("#taskList li");
-
-    tasks.forEach(function(task){
-
-        task.style.display = "flex";
-
-    });
-
-}
-
-
-
-function showActive(){
-
-    let tasks = document.querySelectorAll("#taskList li");
-
-    tasks.forEach(function(task){
-
-        let span = task.querySelector("span");
-
-        if(!span.classList.contains("completed")){
-            task.style.display = "flex";
-        }else{
-            task.style.display = "none";
-        }
-
-    });
-
-}
-
-
-
-function showCompleted(){
-
-    let tasks = document.querySelectorAll("#taskList li");
-
-    tasks.forEach(function(task){
-
-        let span = task.querySelector("span");
-
-        if(span.classList.contains("completed")){
-            task.style.display = "flex";
-        }else{
-            task.style.display = "none";
-        }
-
-    });
-
-}
-function searchTask(){
-    let search = document.getElementById("searchInput").value.toLowerCase();
-
-let tasks = document.querySelectorAll("#taskList li");
-
-tasks.forEach(function(task){
-
-    let text = task.querySelector("span").textContent.toLowerCase();
-
-    if(text.includes(search)){
-        task.style.display = "flex";
-    }else{
-        task.style.display = "none";
-    }
-
-});
-                  }
-    function clearCompleted(){
-
-    let tasks = document.querySelectorAll("#taskList li");
-
-    tasks.forEach(function(task){
-
-        let span = task.querySelector("span");
-
-        if(span.classList.contains("completed")){
-            task.remove();
-        }
-    });
-    saveTasks();
-    updateTaskCount();
-        updateProgress();
-}
-   
-function deleteAllTasks(){
-
-
-    if(confirm("Are you sure you want to delete all tasks?")){
-        document.getElementById("taskList").innerHTML = "";
-        saveTasks();
-        updateTaskCount();
-        updateProgress();
-    }
-}
-      
 </script>
-
-</body>
-</html>
