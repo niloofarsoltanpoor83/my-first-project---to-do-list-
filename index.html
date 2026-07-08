@@ -135,6 +135,7 @@ body.dark li{
         flex-direction:column;
         gap:10px;
     }
+   
         .filters{
     margin:15px 0;
 }
@@ -203,7 +204,7 @@ li:hover{
     width:100%;
     height:20px;
     border-radius:10px;
-}   
+     }
 </style>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"> 
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
@@ -446,6 +447,25 @@ function saveTasks(){
         addTask();
     }
 }); 
+    function searchTask(){
+
+    let input = document.getElementById("searchInput").value.toLowerCase();
+
+    let tasks = document.querySelectorAll("#taskList li");
+
+    tasks.forEach(function(task){
+
+        let text = task.querySelector("span").textContent.toLowerCase();
+
+        if(text.includes(input)){
+            task.style.display = "";
+        }else{
+            task.style.display = "none";
+        }
+
+    });
+
+}
     window.onload = function () {
 
     let savedTasks = JSON.parse(localStorage.getItem("tasks")) || [];
