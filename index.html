@@ -240,6 +240,12 @@ li:hover{
         id="searchInput"
         placeholder="Search task..."
         onkeyup="searchTask()">
+    <select id="sortSelect" onchange="sortTasks()">
+    <option value="newest">Newest</option>
+    <option value="oldest">Oldest</option>
+    <option value="priority">Priority</option>
+    <option value="dueDate">Due Date</option>
+</select>
    <button onclick="clearCompleted()">
     <i class="fa-solid fa-broom"></i> Clear Completed
 </button>
@@ -441,6 +447,50 @@ function saveTasks(){
     });
 
     localStorage.setItem("tasks", JSON.stringify(tasks));
+}
+    function sortTasks(){
+
+    let sortType = document.getElementById("sortSelect").value;
+
+    let taskList = document.getElementById("taskList");
+
+    let tasks = Array.from(taskList.children);
+
+    if(sortType === "newest"){
+        return;
+    }
+
+    if(sortType === "oldest"){
+        tasks.reverse();
+    }
+
+    if(sortType === "priority"){
+
+        const order = {
+            "High": 1,
+            "Medium": 2,
+            "Low": 3
+        };
+
+        tasks.sort(function(a,b){
+
+            let p1 = a.querySelectorAll("small")[0].textContent;
+            let p2 = b.querySelectorAll("small")[0].textContent;
+
+            return order[p1] - order[p2];
+
+        });
+
+    }
+
+    taskList.innerHTML = "";
+
+    tasks.forEach(function(task){
+
+        taskList.appendChild(task);
+
+    });
+
 }
    document.getElementById("taskInput").addEventListener("keydown", function(e){
     if(e.key === "Enter"){
