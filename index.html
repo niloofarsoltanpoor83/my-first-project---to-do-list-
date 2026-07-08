@@ -466,6 +466,36 @@ function saveTasks(){
     });
 
 }
+function clearCompleted(){
+
+    let tasks = document.querySelectorAll("#taskList li");
+
+    tasks.forEach(function(task){
+
+        let completed = task.querySelector("span").classList.contains("completed");
+
+        if(completed){
+            task.remove();
+        }
+
+    });
+
+    saveTasks();
+    updateTaskCount();
+    updateProgress();
+}    
+    function deleteAllTasks(){
+
+    if(confirm("Are you sure you want to delete all tasks?")){
+
+        document.getElementById("taskList").innerHTML = "";
+
+        saveTasks();
+        updateTaskCount();
+        updateProgress();
+    }
+
+}
     window.onload = function () {
 
     let savedTasks = JSON.parse(localStorage.getItem("tasks")) || [];
