@@ -20,4 +20,5 @@ A modern To-Do List application built with HTML, CSS and JavaScript.
 - JavaScript
 
 ## 🌐 Live Demo
-https://niloofarsoltanpoor83.github.io/my-first-project---to-do-list/
+
+https://niloofarsoltanpoor83.github.io/my-first-project---to-do-list-/
