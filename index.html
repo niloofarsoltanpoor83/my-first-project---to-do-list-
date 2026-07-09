@@ -74,6 +74,8 @@ li{
     align-items:center;
     transition: all 0.3s ease;
 box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    border-left: 6px solid #4CAF50;
+overflow: hidden;
 }
 li:hover{
     transform: translateY(-4px);
@@ -99,22 +101,33 @@ body.dark li{
 }
 
 .completed{
-    text-decoration:line-through;
-    color:gray;
+    text-decoration: line-through;
+    color: gray;
+    opacity: 0.7;
 }
 
+.completed::before{
+    content: "✔ ";
+    color: #4CAF50;
+    font-weight: bold;
+}
 .edit{
-    background:mediumpurple;
+    background:#2196F3;
     color:white;
-    padding:7px 15px;
+    border:none;
     border-radius:8px;
+    padding:8px 12px;
 }
-
-.delete{
-    background:red;
+    .delete{
+    background:#f44336;
     color:white;
-    padding:7px 12px;
+    border:none;
     border-radius:8px;
+    padding:8px 12px;
+}
+    .edit:hover,
+.delete:hover{
+    transform: scale(1.05);
 }
     .buttonBox{display:flex;
               gap:8px;
@@ -480,13 +493,16 @@ function sortTasks(){
             return order[pb] - order[pa];
         }
 
-        if(sortType === "dueDate"){
+       if(sortType === "dueDate"){
 
-            let da = a.querySelectorAll("small")[1].textContent;
-            let db = b.querySelectorAll("small")[1].textContent;
+    let da = a.querySelectorAll("small")[1].textContent.replace("📅 Due: ", "");
+    let db = b.querySelectorAll("small")[1].textContent.replace("📅 Due: ", "");
 
-            return da.localeCompare(db);
-        }
+    if(da === "No due date") return 1;
+    if(db === "No due date") return -1;
+
+    return new Date(da) - new Date(db);
+}
 
         return 0;
 
