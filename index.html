@@ -325,11 +325,13 @@ function updateProgress(){
         celebrated = false;
     }
 
-}
-         function createTask(text, priority, dueDate, completed, createdAt = Date.now()){           
-      let li = document.createElement("li");
+}  
+    function createTask(text, priority, dueDate, completed, createdAt = Date.now()){
+
+    let li = document.createElement("li");
     li.classList.add("newTask");
-             li.dataset.createdAt = createdAt;
+    li.dataset.createdAt = createdAt;
+
     let span = document.createElement("span");
     span.textContent = text;
 
@@ -343,31 +345,42 @@ function updateProgress(){
         updateProgress();
     };
 
-   let dueDateText = document.createElement("small");
+    let priorityText = document.createElement("small");
+    priorityText.textContent = priority;
+    priorityText.style.fontWeight = "bold";
 
-if(dueDate){
-
-    dueDateText.textContent = "📅 Due: " + dueDate;
-
-    let today = new Date();
-    today.setHours(0,0,0,0);
-
-    let taskDate = new Date(dueDate);
-
-    if(taskDate < today){
-        dueDateText.style.color = "red";
-        dueDateText.textContent += " ⚠ Overdue";
+    if(priority === "High"){
+        priorityText.style.color = "red";
+    }else if(priority === "Medium"){
+        priorityText.style.color = "orange";
     }else{
-        dueDateText.style.color = "gray";
+        priorityText.style.color = "green";
     }
 
-}else{
+    let dueDateText = document.createElement("small");
 
-    dueDateText.textContent = "📅 No due date";
-    dueDateText.style.color = "gray";
+    if(dueDate){
 
-} 
+        dueDateText.textContent = "📅 Due: " + dueDate;
 
+        let today = new Date();
+        today.setHours(0,0,0,0);
+
+        let taskDate = new Date(dueDate);
+
+        if(taskDate < today){
+            dueDateText.style.color = "red";
+            dueDateText.textContent += " ⚠️ Overdue";
+        }else{
+            dueDateText.style.color = "gray";
+        }
+
+    }else{
+
+        dueDateText.textContent = "📅 No due date";
+        dueDateText.style.color = "gray";
+
+    }
     let date = document.createElement("small");
     date.textContent = new Date().toLocaleDateString();
     date.style.color = "gray";
