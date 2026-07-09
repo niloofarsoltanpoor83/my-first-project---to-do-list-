@@ -343,27 +343,30 @@ function updateProgress(){
         updateProgress();
     };
 
-    let priorityText = document.createElement("small");
-    priorityText.textContent = priority;
-    priorityText.style.fontWeight = "bold";
+   let dueDateText = document.createElement("small");
 
-    if(priority === "High"){
-        priorityText.style.color = "red";
-    }else if(priority === "Medium"){
-        priorityText.style.color = "orange";
+if(dueDate){
+
+    dueDateText.textContent = "📅 Due: " + dueDate;
+
+    let today = new Date();
+    today.setHours(0,0,0,0);
+
+    let taskDate = new Date(dueDate);
+
+    if(taskDate < today){
+        dueDateText.style.color = "red";
+        dueDateText.textContent += " ⚠ Overdue";
     }else{
-        priorityText.style.color = "green";
+        dueDateText.style.color = "gray";
     }
 
-    let dueDateText = document.createElement("small");
+}else{
 
-    if(dueDate){
-        dueDateText.textContent = dueDate;
-    }else{
-        dueDateText.textContent = "📅 No due date";
-    }
-
+    dueDateText.textContent = "📅 No due date";
     dueDateText.style.color = "gray";
+
+} 
 
     let date = document.createElement("small");
     date.textContent = new Date().toLocaleDateString();
