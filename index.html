@@ -91,7 +91,7 @@ li:hover{
     }
 }
 
-.newTask{
+.newfsk{
     animation:fadeIn .4s ease;
 }
 body.dark li{
@@ -316,8 +316,7 @@ function updateProgress(){
          function createTask(text, priority, dueDate, completed, createdAt = Date.now()){           
       let li = document.createElement("li");
     li.classList.add("newTask");
-li.classList.add("newTask");
-             li.dataset.createAt = createdAt;
+             li.dataset.createdAt = createdAt;
     let span = document.createElement("span");
     span.textContent = text;
 
@@ -498,15 +497,7 @@ function sortTasks(){
     });
 
 }
-    taskList.innerHTML = "";
-
-    tasks.forEach(function(task){
-
-        taskList.appendChild(task);
-
-    });
-
-}
+    
    document.getElementById("taskInput").addEventListener("keydown", function(e){
     if(e.key === "Enter"){
         addTask();
